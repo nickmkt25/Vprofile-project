@@ -14,17 +14,17 @@ spec:
       labels:
         app: vpromq
     spec:
-    containers:
-      - name: vpromq
-        image: rabbitmq
-        ports:
-          - name: vpromq-port
-            containerPort: 5672
-    env:
-      - name: RABBITMQ_DEFAULT_USER
-        value: "guest"
-      - name: RABBITMQ_DEFAULT_PASS
-        valueFrom:
-          secretKeyRef:
-          name: app-secret
-          key: rmq-pass
+      containers: # Đã lùi vào 6 khoảng trắng (con của spec)
+        - name: vpromq
+          image: rabbitmq:3-management # Khuyên dùng bản management để có giao diện web quản lý
+          ports:
+            - name: vpromq-port
+              containerPort: 5672
+          env: # Đã chuyển vào trong container và thẳng hàng với ports, image
+            - name: RABBITMQ_DEFAULT_USER
+              value: "guest"
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef: # Đã sửa thụt lề cho name và key bên dưới
+                  name: app-secret
+                  key: rmq-pass
