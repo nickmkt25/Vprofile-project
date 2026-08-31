@@ -14,14 +14,7 @@ spec:
       labels:
         app: vproapp
     spec:
-    containers:
-    - name: vproapp
-      image: nickmkt25/vprofileapp
-      imagePullPolicy: Always
-      ports:
-        - name: vproapp-port
-          containerPort: 8080
-    initContainers:
+      initContainers: # Đã lùi vào 6 khoảng trắng (con của spec)
         - name: init-mydb
           image: busybox:latest
           command: ["sh", "-c", "until nslookup vprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprodb; sleep 2; done"]
@@ -31,3 +24,10 @@ spec:
         - name: init-rmq
           image: busybox:latest
           command: ["sh", "-c", "until nslookup vpromq01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vpromq01; sleep 2; done"]
+      containers: # Đã lùi vào 6 khoảng trắng (ngang hàng với initContainers)
+        - name: vproapp
+          image: nickmkt25/vprofileapp
+          imagePullPolicy: Always
+          ports:
+            - name: vproapp-port
+              containerPort: 8080
