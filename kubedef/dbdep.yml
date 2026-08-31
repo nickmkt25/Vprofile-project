@@ -30,13 +30,13 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-              secretKeyRef:
-                name: app-secret
-                key: db-pass
-    volumeMounts:
-      - name: vpro-db-data
-        mountPath: /var/lib/mysql
-    volumes:
+                secretKeyRef:
+                  name: app-secret
+                  key: db-pass
+          volumeMounts:
+            - name: vpro-db-data
+              mountPath: /var/lib/mysql
+      volumes: 
         - name: vpro-db-data
           persistentVolumeClaim:
             claimName: db-pv-claim
